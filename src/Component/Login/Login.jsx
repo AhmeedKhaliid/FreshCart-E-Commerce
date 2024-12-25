@@ -9,12 +9,13 @@ import {  toast } from 'react-toastify';
 import * as Yup from "yup"
 import { userContext } from '../../Context/UserContext'
 import { Helmet } from 'react-helmet'
+import { jwtDecode } from 'jwt-decode'
     
 export default function Login() {
 
   let navi = useNavigate()
   const [passwordVisible, setPasswordVisible] = useState(false);
-   let { setToken,setname,setemail  } = useContext(userContext);
+   let { setToken,setname,setemail ,setUserId } = useContext(userContext);
   const mutation = useMutation({
     mutationFn: (values) => {
       return axios.post('https://ecommerce.routemisr.com/api/v1/auth/signin', values);
@@ -26,9 +27,13 @@ export default function Login() {
       setname(data.data.user.name)
       setemail(data.data.user.email)
       setToken(data.data.token);
+      setUserId(data.data.token);
       localStorage.setItem("token", data.data.token);
+      const decoded = jwtDecode(localStorage.getItem("token"));
       localStorage.setItem("name", data.data.user.name);
       localStorage.setItem("email", data.data.user.email);
+      localStorage.setItem("Userid",decoded.id);
+      
     },
     onError: (error) => {
       // Handle error case and show a toast message
