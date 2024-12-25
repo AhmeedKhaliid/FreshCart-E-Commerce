@@ -201,7 +201,8 @@ export default function Payment() {
         { headers: { token } }
       )
       .then((res) => {
-
+        console.log(res);
+        
         setUserId(res?.data?.data?.user); // Set the userId here
         localStorage.setItem("Userid", res?.data?.data?.user); 
         setLoading(false); // Set loading to false when request is complete
