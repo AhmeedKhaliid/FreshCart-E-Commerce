@@ -163,7 +163,7 @@ import LoadingScreen from "../LoadingScreen/LoadingScreen";
 import { userContext } from "../../Context/UserContext";
 import { Helmet } from "react-helmet";
 export default function Payment() {
-  let { cartId } = useContext(CartContextProvider);
+  let {refetch, cartId } = useContext(CartContextProvider);
   let navigate = useNavigate();
   const token = localStorage.getItem("token");
   const [loading, setLoading] = useState(false);
@@ -179,7 +179,7 @@ export default function Payment() {
       .then((res) => {
         setUserId(res?.data?.data?.user);
         localStorage.setItem("Userid", res?.data.data.user);
-
+        refetch()
         setLoading(false); // Set loading to false when request is complete
         toast.success("Order placed successfully!");
         navigate("/allorders");
@@ -205,6 +205,8 @@ export default function Payment() {
         setLoading(false); // Set loading to false when request is complete
         toast.success("Order placed successfully!");
         navigate("/allorders");
+        setUserId(res?.data?.data?.user)
+        localStorage.setItem("Userid", res?.data.data.user);
       })
       .catch((error) => {
         console.log(error);
