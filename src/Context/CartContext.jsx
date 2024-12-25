@@ -5,7 +5,6 @@ import { createContext, useState } from "react";
 import { toast,  } from "react-toastify";
 import LoadingScreen from "../Component/LoadingScreen/LoadingScreen";
 import ServerError from "../Component/ServerError/ServerError";
-import { Navigate } from "react-router-dom";
 
 
 // Create context
@@ -18,7 +17,7 @@ export default function CartContext({ children }) {
   const [totalPrice, setTotalPrice] = useState(0);
   const [productsCart, setProductCart] = useState(null);
   const [cartId, setCartId] = useState(null);
-  let navi =Navigate()
+  
 
 
 const addToCart = useMutation({
@@ -88,23 +87,16 @@ const deleteCart = useMutation({
       });
 }
 
-function isLoggedIn() {
-  return localStorage.getItem("token") !== null;
-}
 function getCart() {
-  const newToken = localStorage.getItem("token");
-  if (!isLoggedIn()) {
-    
-    return navi ('/login');  // or show login modal
-  }
-     
+      const newToken = localStorage.getItem("token");
 
 return  axios.get("https://ecommerce.routemisr.com/api/v1/cart", { headers: { token:newToken },});
 
 }
 let { data, isError, isLoading,refetch } = useQuery({
 queryKey: ['Cartitem'],
-queryFn: getCart
+queryFn: getCart,
+enabled: !!localStorage.getItem("token"),
 })
 
 useEffect(() => {
