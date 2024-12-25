@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 import { userContext } from '../../Context/UserContext';
 import LoadingScreen from '../LoadingScreen/LoadingScreen';
 import { Helmet } from 'react-helmet';
+import {  useNavigate } from 'react-router-dom';
 export default function Profile() {
   const [isPasswordSectionOpen, setIsPasswordSectionOpen] = useState(false); // State to toggle the password section visibility
   const [isUserSectionOpen, setIsUserSectionOpen] = useState(false); // State to toggle the password section visibility
@@ -14,6 +15,7 @@ export default function Profile() {
   const [currentPasswordVisible, setCurrentPasswordVisible] = useState(false);
   const [newPasswordVisible, setNewPasswordVisible] = useState(false);
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
+  let navi = useNavigate()
   const token = localStorage.getItem('token');
   // Password Change Mutation
 
@@ -26,6 +28,10 @@ export default function Profile() {
 
       toast.success('Password updated successfully!');
       passwordFormik.resetForm()
+      localStorage.removeItem("token")
+      navi("/login")
+
+
     },
     onError: (err) => {
       toast.error(err.response?.data?.errors?.msg || 'Error occurred while changing password');
@@ -45,16 +51,16 @@ export default function Profile() {
       toast.success('User information updated successfully!');
       setname(data?.data?.user?.name);
       setemail(data.data.user.email);
-      setPhone(data.data.user.phone);
       localStorage.setItem("name", data?.data?.user?.name);
       localStorage.setItem("email", data.data.user.email);
-      localStorage.setItem("phone", data.data.user.phone);
+      userFormik.resetForm()
+
 
       
 
     },
     onError: (err) => {
-      toast.error(err.response?.data?.message || 'Error occurred while updating user information'); // Display error toast
+      toast.error(err.response?.data?.errors?.msg || 'Error occurred while updating user information'); // Display error toast
     },
   });
 
