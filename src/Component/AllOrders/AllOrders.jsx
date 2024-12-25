@@ -4,12 +4,15 @@ import { useQuery } from '@tanstack/react-query';
 import LoadingScreen from '../LoadingScreen/LoadingScreen';
 import ServerError from '../ServerError/ServerError';
 import { Helmet } from 'react-helmet';
+import { jwtDecode } from 'jwt-decode';
 
 export default function AllOrders() {
     let  userId  = localStorage.getItem("Userid");
   function getUserOrders(userId) {
-    return axios.get(`https://ecommerce.routemisr.com/api/v1/orders/user/${userId}`)
+    const decoded = jwtDecode(localStorage.getItem("token"));
+    return axios.get(`https://ecommerce.routemisr.com/api/v1/orders/user/${decoded?.id || userId }`);
   }
+
 
   // Fetch data from API
   let { data, isError, isLoading } = useQuery({
