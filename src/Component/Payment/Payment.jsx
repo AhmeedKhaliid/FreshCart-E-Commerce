@@ -201,9 +201,12 @@ export default function Payment() {
         { headers: { token } }
       )
       .then((res) => {
-        window.open(res.data.session.url, "_self");
+
+        setUserId(res?.data?.data?.user); // Set the userId here
+        localStorage.setItem("Userid", res?.data?.data?.user); 
         setLoading(false); // Set loading to false when request is complete
         toast.success("Order placed successfully!");
+        window.open(res.data.session.url, "_self");
         navigate("/allorders");
       })
       .catch((error) => {
