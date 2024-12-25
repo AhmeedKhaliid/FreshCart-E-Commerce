@@ -205,8 +205,6 @@ export default function Payment() {
         setLoading(false); // Set loading to false when request is complete
         toast.success("Order placed successfully!");
         navigate("/allorders");
-        setUserId(res?.data?.data?.user)
-        localStorage.setItem("Userid", res?.data.data.user);
       })
       .catch((error) => {
         console.log(error);
