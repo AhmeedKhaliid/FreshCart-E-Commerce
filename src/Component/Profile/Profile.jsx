@@ -281,7 +281,7 @@ export default function Profile() {
               />
             
             </div>
-            <button disabled={!userFormik.isValid || !userFormik.dirty ? true : false} onClick={notify} type="submit" className="hover:bg-[#088A08] focus:ring-[#6cce6c] disabled:opacity-65 disabled:cursor-not-allowed w-full px-4 py-2 mx-auto mt-5 font-semibold text-center text-white transition-all duration-300 bg-[#0AAD0A] rounded-lg cursor-pointer">Update Password</button>
+            <button disabled={!userFormik.isValid || !userFormik.dirty ? true : false} onClick={notify} type="submit" className="hover:bg-[#088A08] focus:ring-[#6cce6c] disabled:opacity-65 disabled:cursor-not-allowed w-full px-4 py-2 mx-auto mt-5 font-semibold text-center text-white transition-all duration-300 bg-[#0AAD0A] rounded-lg cursor-pointer">Update Personal Information</button>
             </form>
           </div>
         </section>
