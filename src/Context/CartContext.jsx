@@ -88,7 +88,7 @@ const deleteCart = useMutation({
 }
 
 function getCart() {
-  const newToken = localStorage.getItem("token");
+      const newToken = localStorage.getItem("token");
 
 return  axios.get("https://ecommerce.routemisr.com/api/v1/cart", { headers: { token:newToken },});
 
@@ -97,6 +97,7 @@ let { data, isError, isLoading,refetch } = useQuery({
 queryKey: ['Cartitem'],
 queryFn: getCart
 })
+
 useEffect(() => {
 if (data) {
   setNumOfCart(data?.data?.numOfCartItems);
