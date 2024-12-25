@@ -31,7 +31,7 @@ export default function ResetCode() {
 
   let validationSchema = Yup.object().shape(
     {
-      resetCode: Yup.string().matches(/^[0-9]{6}$/, "Code must be valid 6 number").required("Code is required"),
+      resetCode: Yup.string().matches(/^[0-9]{5}$/, "Code must be valid 5 number").required("Code is required"),
 
     }
   )
