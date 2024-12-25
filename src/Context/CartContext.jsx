@@ -17,12 +17,14 @@ export default function CartContext({ children }) {
   const [totalPrice, setTotalPrice] = useState(0);
   const [productsCart, setProductCart] = useState(null);
   const [cartId, setCartId] = useState(null);
-  const token = localStorage.getItem("token");
+  
 
 
 const addToCart = useMutation({
+ 
     mutationFn: (productId) => {
-      return axios.post("https://ecommerce.routemisr.com/api/v1/cart",{ productId },{ headers: { token } }
+      const newToken = localStorage.getItem("token");
+      return axios.post("https://ecommerce.routemisr.com/api/v1/cart",{ productId },{ headers: {  token:newToken } }
       );
     },
     onSuccess: (data) => {
@@ -37,7 +39,9 @@ const addToCart = useMutation({
   
 const deleteItem = useMutation({
   mutationFn: (id) => {
-    return axios.delete(`https://ecommerce.routemisr.com/api/v1/cart/${id}`, {headers: { token },})
+    const newToken = localStorage.getItem("token");
+
+    return axios.delete(`https://ecommerce.routemisr.com/api/v1/cart/${id}`, {headers: { token:newToken },})
   },
   onSuccess: () => {
   
@@ -51,7 +55,9 @@ const deleteItem = useMutation({
 
 const deleteCart = useMutation({
   mutationFn: () => {
-    return axios.delete(`https://ecommerce.routemisr.com/api/v1/cart`, {headers: { token },})},
+    const newToken = localStorage.getItem("token");
+
+    return axios.delete(`https://ecommerce.routemisr.com/api/v1/cart`, {headers: { token:newToken },})},
   onSuccess: () => {
   
     toast.success("Cart empty succesfully");
@@ -63,9 +69,11 @@ const deleteCart = useMutation({
 });
 
   async function updateCartQuantity(id, count) {
+    const newToken = localStorage.getItem("token");
+
     return axios
       .put(
-        `https://ecommerce.routemisr.com/api/v1/cart/${id}`,{ count },{ headers: { token } })
+        `https://ecommerce.routemisr.com/api/v1/cart/${id}`,{ count },{ headers: { token:newToken } })
       .then((res) => {
         setNumOfCart(res.data.numOfCartItems);
         setTotalPrice(res.data.data.totalCartPrice);
@@ -80,7 +88,9 @@ const deleteCart = useMutation({
 }
 
 function getCart() {
-return  axios.get("https://ecommerce.routemisr.com/api/v1/cart", { headers: { token },});
+  const newToken = localStorage.getItem("token");
+
+return  axios.get("https://ecommerce.routemisr.com/api/v1/cart", { headers: { token:newToken },});
 
 }
 let { data, isError, isLoading,refetch } = useQuery({
