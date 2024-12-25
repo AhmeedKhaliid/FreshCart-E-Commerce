@@ -4,19 +4,17 @@ import { useQuery } from '@tanstack/react-query';
 import LoadingScreen from '../LoadingScreen/LoadingScreen';
 import ServerError from '../ServerError/ServerError';
 import { Helmet } from 'react-helmet';
-import { jwtDecode } from 'jwt-decode';
 
 export default function AllOrders() {
     let  userId  = localStorage.getItem("Userid");
-    const decoded = jwtDecode(localStorage.getItem("token"));
-  function getUserOrders() {
-    return axios.get(`https://ecommerce.routemisr.com/api/v1/orders/user/${decoded?.id}`)
+  function getUserOrders(userId) {
+    return axios.get(`https://ecommerce.routemisr.com/api/v1/orders/user/${userId}`)
   }
 
   // Fetch data from API
   let { data, isError, isLoading } = useQuery({
     queryKey: ['products', userId],
-    queryFn:  () => getUserOrders(id)
+    queryFn:  () => getUserOrders(userId)
   })
   if (isLoading) {
     return <LoadingScreen />
